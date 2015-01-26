@@ -1,0 +1,25 @@
+.dropcaps {
+  background-color: #DDD;
+  color: white;
+  float: left;
+  font-size: 3em;
+  font-weight: bold;
+  height: 1.3em;
+  line-height: 1em;
+  margin: -0.3em 0.1em 0 0;
+  padding: 0.15em;
+  position: relative;
+  text-align: center;
+  width: 1.3em;
+}
+
+.dropcaps:before {
+  color: #444;
+  content: attr(data-quote);
+  left: 0;
+  margin: -0.5rem;
+  position: absolute;
+  /* Chrome, Firefox 3.5+, IE 10+, Opera 9+, Safari 1+ */
+  text-shadow: 2px 2px 2px white;
+  top: 0;
+}

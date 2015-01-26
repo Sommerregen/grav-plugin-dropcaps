@@ -1,0 +1,3 @@
+enabled: true                 # Set to false to disable this plugin completely
+built_in_css: true            # Use built-in CSS of the plugin
+weight: -5                    # Set the weight (order of executing)
