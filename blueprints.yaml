@@ -1,12 +1,13 @@
 name: DropCaps
-version: 1.0.0
+version: 1.0.1
 description: "This plugin places a decorative dropped initial capital letter to the start of the first paragraph of a text."
-icon: filter
+icon: paw
 author:
   name: Sommerregen
   email: sommerregen@benjamin-regler.de
 homepage: https://github.com/sommerregen/grav-plugin-dropcaps
 keywords: drop caps, filter, formatter, letter, pages, posts, typography, plugin
+docs: https://github.com/sommerregen/grav-plugin-dropcaps/blob/master/README.md
 bugs: https://github.com/sommerregen/grav-plugin-dropcaps/issues
 license: MIT
 
@@ -43,3 +44,14 @@ form:
       validate:
         type: number
         min: 0
+
+    process:
+      type: toggle
+      label: Activate `DropCaps` filter
+      highlight: 1
+      default: 1
+      options:
+        1: Enabled
+        0: Disabled
+      validate:
+        type: bool
