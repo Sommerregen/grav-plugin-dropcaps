@@ -1,3 +1,9 @@
+# Global plugin configurations
+
 enabled: true                 # Set to false to disable this plugin completely
 built_in_css: true            # Use built-in CSS of the plugin
 weight: -5                    # Set the weight (order of executing)
+
+# Global and page specific configurations
+
+process: true                 # Toggle to process drop-caps on the page or not

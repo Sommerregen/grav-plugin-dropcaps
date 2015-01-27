@@ -1,6 +1,6 @@
 <?php
 /**
- * DropCaps v1.0.0
+ * DropCaps v1.0.1
  *
  * This plugin places a decorative dropped initial capital letter to
  * the start of the first paragraph of a text.
@@ -8,7 +8,7 @@
  * Licensed under MIT, see LICENSE.
  *
  * @package     DropCaps
- * @version     1.0.0
+ * @version     1.0.1
  * @link        <https://github.com/sommerregen/grav-plugin-archive-plus>
  * @author      Benjamin Regler <sommergen@benjamin-regler.de>
  * @copyright   2015, Benjamin Regler
@@ -20,6 +20,8 @@ namespace Grav\Plugin;
 use Grav\Common\Grav;
 use Grav\Common\Plugin;
 use Grav\Common\Page\Page;
+use Grav\Common\Data\Data;
+use Grav\Common\Inflector;
 use RocketTheme\Toolbox\Event\Event;
 
 /**
@@ -80,9 +82,10 @@ class DropCapsPlugin extends Plugin {
   public function onPageContentProcessed(Event $event) {
     /** @var Page $page */
     $page = $event['page'];
+    $config = $this->mergeConfig($page);
 
     // Modify page content only once
-    if ( $this->compileOnce($page) ) {
+    if ( $config->get('process') AND $this->compileOnce($page) ) {
       $content = $page->getRawContent();
 
       // Create a DOM parser object
@@ -191,5 +194,49 @@ class DropCapsPlugin extends Plugin {
     }
 
     return FALSE;
+  }
+
+  /**
+   * Merge global and page configurations.
+   *
+   * @param  Page   $page The page to merge the configurations with the
+   *                      plugin settings.
+   */
+  protected function mergeConfig(Page $page, $className = NULL) {
+    if ( is_string($className) ) {
+      // Load default configuration with given class name
+      $defaults = (array) $this->config->get($className);
+    } else {
+      // Load configuration based on class name
+      $reflector = new \ReflectionClass($this);
+
+      // Remove namespace and trailing "Plugin" word
+      $name = $reflector->getShortName();
+      $name = substr($name, 0, -strlen('Plugin'));
+
+      // Guess configuration path from class name
+      $class_formats = array(
+        strtolower($name),                # all lowercased
+        Inflector::underscorize($name),   # underscored
+        );
+
+      $defaults = array();
+      // Try to load configuration
+      foreach ( $class_formats as $name ) {
+        if ( $defaults = (array) $this->config->get('plugins.' . $name) ) {
+          $className = $name;
+          break;
+        }
+      }
+    }
+
+    // Retrieve page header configuration
+    if ( isset($page->header()->$className) ) {
+      $defaults = array_merge($defaults, $page->header()->$className);
+    }
+
+    // Return configurations as a new data config class
+    $config = new Data($defaults);
+    return $config;
   }
 }
