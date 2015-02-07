@@ -38,12 +38,13 @@ form:
 
     weight:
       type: text
-      label: Set the weight (order of executing)
+      label: Set the weight (order of execution)
       default: -5
       help: "To process contents right after *SmartyPants* use negative values."
       validate:
-        type: number
-        min: 0
+        type: int
+        min: -100
+        max: 100
 
     process:
       type: toggle
