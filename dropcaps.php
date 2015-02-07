@@ -102,14 +102,22 @@ class DropCapsPlugin extends Plugin {
       @$dom->loadHTML($content);
 
       // Do nothing, if DOM is empty or a route for a given page does not exist
-      if ( is_null($dom->documentElement) OR !$page->routable() ) {
+      if ( is_null($dom->documentElement) OR !$page->route() ) {
         return;
       }
 
+      // Initialize variables for titling
+      $titling = $config->get('titling.enabled', FALSE);
+      $breakpoints = preg_quote($config->get('titling.breakpoints'));
+      $regex = '~^.+?[' . $breakpoints . ']~isux';
+
+      // Process variables
       $found = FALSE;
       $content = '';
+
       // Consider child elements of <body> tag only
-      foreach ( $dom->documentElement->firstChild->childNodes as $node ) {
+      $body = $dom->getElementsByTagName('body')->item(0);
+      foreach ( $body->childNodes as $node ) {
         // A paragraph should have at least one node with non-empty content
         if (  !$found AND
               ($node->tagName == 'p') AND
@@ -121,14 +129,20 @@ class DropCapsPlugin extends Plugin {
 
           // Extract first few letters from paragraph
           $text = $dom->saveHTML($node->firstChild);
-          $extract = mb_substr($text, 0, 2, 'UTF-8');
-          $extract = iconv('UTF-8', 'ASCII//TRANSLIT', $extract);
+          $chunk = iconv('UTF-8', 'ASCII//TRANSLIT', $text);
+
+          $length = 2;
+          // Determine maximum text length for titling
+          if ( $titling AND preg_match($regex, $chunk, $match) ) {
+            $length = strlen($match[0]);
+          }
+          $chunk = mb_substr($chunk, 0, $length, 'UTF-8');
 
           // We're looking for the first paragraph tag followed by a
           // capital letter
           $pattern = '/(&#8220;|&#8216;|&lsquo;|&ldquo;|&quot;|\'|")?([A-Z])/Uui';
 
-          if ( preg_match($pattern, $extract, $result) ) {
+          if ( preg_match($pattern, $chunk, $result) ) {
             // Extract first letter and append it to the <span> element
             $firstletter = mb_strtoupper($result[2]);
             $span->appendChild($dom->createTextNode($firstletter));
@@ -144,12 +158,42 @@ class DropCapsPlugin extends Plugin {
               $span->setAttribute('data-quote', $firstchar);
             }
 
-            // Delete first letter in paragraph
-            $node->firstChild->data = mb_substr($text,
-              mb_strlen($result[0]), mb_strlen($text), 'UTF-8');
+            // Extract first-line of text
+            $letterlength = mb_strlen($result[0]);
+            $firstline = mb_substr($text, $letterlength,
+              $length - $letterlength, 'UTF-8');
 
-            // Insert <span> element before text of paragraph
-            $node->insertBefore($span, $node->firstChild);
+            // Wrap text for titling
+            if ( $titling ) {
+              // Delete first line of paragraph
+              $node->firstChild->data = mb_substr($text,
+                $length, mb_strlen($text), 'UTF-8');
+
+              // Wrap dropcap and first line in a titling <span> element
+              $titling = $dom->createElement('span');
+              $titling->setAttribute('class', 'titling');
+
+              $titling->appendChild($span);
+              $titling->appendChild($dom->createTextNode($firstline));
+
+              // Insert titling <span> element before text of paragraph
+              $node->insertBefore($titling, $node->firstChild);
+
+              // Highlight first line of text
+              if ( $config->get('titling.first_line') ) {
+                $class = $node->hasAttribute('class') ? $node->getAttribute('class') : '';
+                $classes = array_filter(explode(' ', $class));
+                $classes[] = 'highlight';
+                $node->setAttribute('class', implode(' ', $classes));
+              }
+            } else {
+              // Delete first letter of paragraph
+              $node->firstChild->data = mb_substr($text,
+                $letterlength, mb_strlen($text), 'UTF-8');
+
+              // Insert <span> element before text of paragraph
+              $node->insertBefore($span, $node->firstChild);
+            }
 
             // Don't insert more than one drop cap into document
             $found = TRUE;
@@ -194,49 +238,5 @@ class DropCapsPlugin extends Plugin {
     }
 
     return FALSE;
-  }
-
-  /**
-   * Merge global and page configurations.
-   *
-   * @param  Page   $page The page to merge the configurations with the
-   *                      plugin settings.
-   */
-  protected function mergeConfig(Page $page, $className = NULL) {
-    if ( is_string($className) ) {
-      // Load default configuration with given class name
-      $defaults = (array) $this->config->get($className);
-    } else {
-      // Load configuration based on class name
-      $reflector = new \ReflectionClass($this);
-
-      // Remove namespace and trailing "Plugin" word
-      $name = $reflector->getShortName();
-      $name = substr($name, 0, -strlen('Plugin'));
-
-      // Guess configuration path from class name
-      $class_formats = array(
-        strtolower($name),                # all lowercased
-        Inflector::underscorize($name),   # underscored
-        );
-
-      $defaults = array();
-      // Try to load configuration
-      foreach ( $class_formats as $name ) {
-        if ( $defaults = (array) $this->config->get('plugins.' . $name) ) {
-          $className = $name;
-          break;
-        }
-      }
-    }
-
-    // Retrieve page header configuration
-    if ( isset($page->header()->$className) ) {
-      $defaults = array_merge($defaults, $page->header()->$className);
-    }
-
-    // Return configurations as a new data config class
-    $config = new Data($defaults);
-    return $config;
   }
 }
