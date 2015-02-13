@@ -88,17 +88,32 @@ class DropCapsPlugin extends Plugin {
     if ( $config->get('process') AND $this->compileOnce($page) ) {
       $content = $page->getRawContent();
 
+      /**
+       * Two Really good resources to handle DOMDocument with HTML(5)
+       * correctly.
+       *
+       * @see http://stackoverflow.com/questions/3577641/how-do-you-parse-and-process-html-xml-in-php
+       * @see http://stackoverflow.com/questions/7997936/how-do-you-format-dom-structures-in-php
+       */
+
+      // Clear previous errors
+      if ( libxml_use_internal_errors(TRUE) === TRUE ) {
+        libxml_clear_errors();
+      }
+
       // Create a DOM parser object
       $dom = new \DOMDocument('1.0', 'UTF-8');
 
       // Pretty print output
-      $dom->preserveWhiteSpace = FALSE;
-      $dom->formatOutput       = TRUE;
+      $dom->preserveWhiteSpace = TRUE;
+      $dom->formatOutput       = FALSE;
+
+      // Normalize newlines
+      $content = preg_replace('~\R~u', "\n", $content);
 
       // Parse the HTML using UTF-8
       // The @ before the method call suppresses any warnings that
       // loadHTML might throw because of invalid HTML in the page.
-      $content = mb_convert_encoding($content, 'HTML-ENTITIES', 'UTF-8');
       @$dom->loadHTML($content);
 
       // Do nothing, if DOM is empty or a route for a given page does not exist
@@ -108,8 +123,8 @@ class DropCapsPlugin extends Plugin {
 
       // Initialize variables for titling
       $titling = $config->get('titling.enabled', FALSE);
-      $breakpoints = preg_quote($config->get('titling.breakpoints'));
-      $regex = '~^.+?[' . $breakpoints . ']~isux';
+      $breakpoints = preg_quote($config->get('titling.breakpoints'), '~');
+      $regex = "~^.+?[$breakpoints](?=\s\w|\s*$)~isux";
 
       // Process variables
       $found = FALSE;
@@ -137,6 +152,7 @@ class DropCapsPlugin extends Plugin {
             $length = strlen($match[0]);
           }
           $chunk = mb_substr($chunk, 0, $length, 'UTF-8');
+          $chunk = mb_convert_encoding($chunk, 'HTML-ENTITIES', 'UTF-8');
 
           // We're looking for the first paragraph tag followed by a
           // capital letter
@@ -199,9 +215,27 @@ class DropCapsPlugin extends Plugin {
             $found = TRUE;
           }
         }
-        $content .= $node->ownerDocument->saveHTML($node);
+
+        // Transform DOMDocument back to string representation
+        if ( ($html = $dom->saveXML($node, LIBXML_NOEMPTYTAG)) !== FALSE ) {
+          // Expand empty tags (e.g. <br/> to <br></br>)
+          $content .= $html;
+        }
       }
 
+      // Fix formatting for self-closing tags in HTML5 and removing
+      // encapsulated (uncommented) CDATA blocks in <script> and
+      // <style> tags
+      $regex = array(
+        '~' . preg_quote('<![CDATA[', '~') . '~' => '',
+        '~' . preg_quote(']]>', '~') . '~' => '',
+        '~></(?:area|base(?:font)?|br|col|command|embed|frame|hr|img|input|keygen|link|meta|param|source|track|wbr)>~' => ' />',
+        );
+
+      // Make XML HTML5 compliant
+      $content = preg_replace(array_keys($regex), $regex, $content);
+
+      // Write content back to page
       $page->setRawContent($content);
     }
   }
