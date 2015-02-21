@@ -1,6 +1,6 @@
 <?php
 /**
- * DropCaps v1.1.0
+ * DropCaps v1.2.0
  *
  * This plugin places a decorative dropped initial capital letter to
  * the start of the first paragraph of a text.
@@ -8,7 +8,7 @@
  * Licensed under MIT, see LICENSE.
  *
  * @package     DropCaps
- * @version     1.1.0
+ * @version     1.2.0
  * @link        <https://github.com/sommerregen/grav-plugin-dropcaps>
  * @author      Benjamin Regler <sommerregen@benjamin-regler.de>
  * @copyright   2015, Benjamin Regler
