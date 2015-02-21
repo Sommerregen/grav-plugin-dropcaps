@@ -18,7 +18,7 @@ Installing or updating the `DropCaps` plugin can be done in one of two ways. Usi
 
 	/your/site/grav/user/plugins/dropcaps
 
-For more informations, please check the [Installation and update guide](INSTALL.md).
+For more informations, please check the [Installation and update guide](docs/INSTALL.md).
 
 ## Usage
 
@@ -39,7 +39,7 @@ process: true                 # Toggle to process drop-caps on the page or not
 titling:
   enabled: false              # Toggle to (de-)activate titling of text
   first_line: false           # Highlight first line of paragraph
-  breakpoints: ".,!?'\"-"     # Specify which characters will end titling
+  breakpoints: ".:;!?'\"-"    # Specify which characters will end titling
 ```
 
 If you need to change any value, then the best process is to copy the [dropcaps.yaml](dropcaps.yaml) file into your `users/config/plugins/` folder (create it if it doesn't exist), and then modify there. This will override the default settings.
@@ -71,13 +71,13 @@ You can now edit, override and tweak the stylesheet however you prefer. You can 
 
 ## Contributing
 
-You can contribute at any time! Before opening any issue, please search for existing issues and review the [guidelines for contributing](CONTRIBUTING.md).
+You can contribute at any time! Before opening any issue, please search for existing issues and review the [guidelines for contributing](docs/CONTRIBUTING.md).
 
 After that please note:
 
 * If you find a bug or would like to make a feature request or suggest an improvement, [please open a new issue][issues]. If you have any interesting ideas for additions to the syntax please do suggest them as well!
 * Feature requests are more likely to get attention if you include a clearly described use case.
-* If you wish to submit a pull request, please make again sure that your request match the [guidelines for contributing](CONTRIBUTING.md) and that you keep track of adding unit tests for any new or changed functionality.
+* If you wish to submit a pull request, please make again sure that your request match the [guidelines for contributing](docs/CONTRIBUTING.md) and that you keep track of adding unit tests for any new or changed functionality.
 
 ### Support and donations
 

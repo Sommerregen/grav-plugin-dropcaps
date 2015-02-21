@@ -1,3 +1,12 @@
+# v1.2.0
+## 02/07/2015
+
+2. [](#improved)
+  * Improved process engine to ensure not to alter HTML tags or HTML entities in content
+  * Refactored code
+3. [](#bugfix)
+  * Fixed self-closing tags and ensure to return valid HTML(5)
+
 # v1.1.0
 ## 02/07/2015
 
