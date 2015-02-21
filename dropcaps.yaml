@@ -9,5 +9,5 @@ weight: -5                    # Set the weight (order of execution)
 process: true                 # Toggle to process drop-caps on the page or not
 titling:
   enabled: false              # Toggle to (de-)activate titling of text
-  first_line: true            # Highlight first line of paragraph
-  breakpoints: ".,:;!?'\"-"   # Specify which characters will end titling
+  first_line: false           # Highlight first line of paragraph
+  breakpoints: ".:;!?'\"-"    # Specify which characters will end titling
