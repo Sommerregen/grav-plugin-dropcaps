@@ -28,7 +28,8 @@ use RocketTheme\Toolbox\Event\Event;
  * This plugin places a decorative dropped initial capital letter to
  * the start of the first paragraph of a text.
  */
-class DropCapsPlugin extends Plugin {
+class DropCapsPlugin extends Plugin
+{
   /**
    * @var DropCapsPlugin
    */
@@ -51,7 +52,8 @@ class DropCapsPlugin extends Plugin {
    * @return array    The list of events of the plugin of the form
    *                      'name' => ['method_name', priority].
    */
-  public static function getSubscribedEvents() {
+  public static function getSubscribedEvents()
+  {
     return [
       'onPluginsInitialized' => ['onPluginsInitialized', 0],
     ];
@@ -60,13 +62,14 @@ class DropCapsPlugin extends Plugin {
   /**
    * Initialize configuration.
    */
-  public function onPluginsInitialized() {
+  public function onPluginsInitialized()
+  {
     if ($this->isAdmin()) {
       $this->active = false;
       return;
     }
 
-    if ( $this->config->get('plugins.dropcaps.enabled') ) {
+    if ($this->config->get('plugins.dropcaps.enabled')) {
       // Initialize DropCaps class
       require_once(__DIR__ . '/classes/DropCaps.php');
       $this->dropcaps = new DropCaps();
@@ -89,14 +92,15 @@ class DropCapsPlugin extends Plugin {
    * @param  Event  $event The event when 'onPageContentProcessed' was
    *                       fired.
    */
-  public function onPageContentProcessed(Event $event) {
+  public function onPageContentProcessed(Event $event)
+  {
     /** @var Page $page */
     $page = $event['page'];
 
-    $config = $this->mergeConfig($page, $deep = TRUE);
-    if ( $config->get('process', FALSE) AND $this->compileOnce($page) ) {
+    $config = $this->mergeConfig($page, $deep = true);
+    if ($config->get('process', false) && $this->compileOnce($page)) {
       // Do nothing, if a route for a given page does not exist
-      if ( !$page->route() ) {
+      if (!$page->route()) {
         return;
       }
 
@@ -113,7 +117,8 @@ class DropCapsPlugin extends Plugin {
   /**
    * Set needed variables to display drop caps.
    */
-  public function onTwigSiteVariables() {
+  public function onTwigSiteVariables()
+  {
     if ($this->config->get('plugins.dropcaps.built_in_css')) {
       $this->grav['assets']->add('plugin://dropcaps/assets/css/dropcaps.css');
     }
@@ -128,19 +133,20 @@ class DropCapsPlugin extends Plugin {
    * Checks if a page has already been compiled yet.
    *
    * @param  Page    $page The page to check
-   * @return boolean       Returns TRUE if page has already been
-   *                       compiled yet, FALSE otherwise
+   * @return boolean       Returns true if page has already been
+   *                       compiled yet, false otherwise
    */
-  protected function compileOnce(Page $page) {
-    static $processed = array();
+  protected function compileOnce(Page $page)
+  {
+    static $processed = [];
 
     $id = md5($page->path());
     // Make sure that contents is only processed once
-    if ( !isset($processed[$id]) OR ($processed[$id] < $page->modified()) ) {
+    if (!isset($processed[$id]) || ($processed[$id] < $page->modified())) {
       $processed[$id] = $page->modified();
-      return TRUE;
+      return true;
     }
 
-    return FALSE;
+    return false;
   }
 }
