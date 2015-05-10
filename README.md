@@ -59,7 +59,7 @@ to highlight the first line of paragraph instead of only the first sentence.
 
 Something you might want to do is to override the look and feel of the drop-caps, and with Grav it is super easy.
 
-Copy the stylesheet [css/dropcaps.css](css/dropcaps.css) into the `css` folder of your custom theme, and add it to the list of CSS files.
+Copy the stylesheet [assets/css/dropcaps.css](assets/css/dropcaps.css) into the `css` folder of your custom theme, and add it to the list of CSS files.
 
 ```
 /your/site/grav/user/themes/custom-theme/css/dropcaps.css
