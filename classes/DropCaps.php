@@ -2,15 +2,14 @@
 /**
  * DropCaps
  *
- * Helper class to place a decorative dropped initial capital letter to
- * the start of the first paragraph of a text.
+ * This file is part of Grav DropCaps plugin.
  *
- * Licensed under MIT, see LICENSE.
+ * Dual licensed under the MIT or GPL Version 3 licenses, see LICENSE.
+ * http://benjamin-regler.de/license/
  */
 
 namespace Grav\Plugin;
 
-use Grav\Common\Grav;
 use Grav\Common\GravTrait;
 
 /**
@@ -79,7 +78,7 @@ class DropCaps
         }
       } else {
         // Add placeholder to text
-        $textContent .= "\xA1$id\xA1";
+        $textContent .= "\x1A$id\x1A";
       }
 
       // No breakpoint found...
@@ -89,7 +88,7 @@ class DropCaps
     }
 
     // Replace placeholder with regex for matching a XML/HTML tag
-    $re = str_replace("\xA1$id\xA1", '\s*<\w+[^>]*>.*?',
+    $re = str_replace("\x1A$id\x1A", '\s*<\w+[^>]*>.*?',
       preg_quote($textContent, '~'));
     $re = '~(<p[^>]*>)\s*(' . $re . ')~is';
 
@@ -217,9 +216,9 @@ class DropCaps
     $document = new \DOMDocument('1.0', 'UTF-8');
 
     // Encode contents as UTF-8, strip whitespaces & normalize newlines
-    // $content = mb_convert_encoding($content, 'HTML-ENTITIES', 'UTF-8');
-    $content = preg_replace(array('~\R~u', '~>[[:space:]]++<~m'),
-      array("\n", '><'), $content);
+    $content = mb_convert_encoding($content, 'HTML-ENTITIES', 'UTF-8');
+    // $content = preg_replace(array('~\R~u', '~>[[:space:]]++<~m'),
+    //   array("\n", '><'), $content);
 
     // Parse the HTML using UTF-8
     // The @ before the method call suppresses any warnings that

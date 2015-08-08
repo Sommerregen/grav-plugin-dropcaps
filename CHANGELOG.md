@@ -1,3 +1,12 @@
+# v1.3.0
+## 08/08/2015
+
+1. [](#new)
+  * Added admin configurations **(requires Grav 0.9.34+)**
+2. [](#improved)
+  * Switched to `onBuildPagesInitialized` event **(requires Grav 0.9.29+)**
+  * Updated `README.md`
+
 # v1.2.1
 ## 05/10/2015
 
@@ -19,7 +28,7 @@
 1. [](#new)
   * Completely new re-design of DropCaps style
 2. [](#improved)
-  * Added support for HHVM **(requires Grav >= 0.9.17)**
+  * Added support for HHVM **(requires Grav 0.9.17+)**
   * Added modular pages support
   * Improved readability of code
   * Updated plugin to use new `mergeConfig` method of Grav core **(requires Grav >= 0.9.16)**

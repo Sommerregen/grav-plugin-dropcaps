@@ -1,23 +1,25 @@
 <?php
 /**
- * DropCaps v1.2.1
+ * DropCaps v1.3.0
  *
  * This plugin places a decorative dropped initial capital letter to
  * the start of the first paragraph of a text.
  *
- * Licensed under MIT, see LICENSE.
+ * Dual licensed under the MIT or GPL Version 3 licenses, see LICENSE.
+ * http://benjamin-regler.de/license/
+ *
  *
  * @package     DropCaps
- * @version     1.2.1
+ * @version     1.3.0
  * @link        <https://github.com/sommerregen/grav-plugin-dropcaps>
  * @author      Benjamin Regler <sommerregen@benjamin-regler.de>
  * @copyright   2015, Benjamin Regler
- * @license     <http://opensource.org/licenses/MIT>            MIT
+ * @license     <http://opensource.org/licenses/MIT>        MIT
+ * @license     <http://opensource.org/licenses/GPL-3.0>    GPLv3
  */
 
 namespace Grav\Plugin;
 
-use Grav\Common\Grav;
 use Grav\Common\Plugin;
 use Grav\Common\Page\Page;
 use RocketTheme\Toolbox\Event\Event;
@@ -70,17 +72,14 @@ class DropCapsPlugin extends Plugin
     }
 
     if ($this->config->get('plugins.dropcaps.enabled')) {
-      // Initialize DropCaps class
-      require_once(__DIR__ . '/classes/DropCaps.php');
-      $this->dropcaps = new DropCaps();
+      $this->init();
 
       $weight = $this->config->get('plugins.dropcaps.weight');
       // Process contents order according to weight option
       // (default: -5): to process page content right after SmartyPants
 
       $this->enable([
-        'onPageContentProcessed' => ['onPageContentProcessed', $weight],
-        'onTwigSiteVariables' => ['onTwigSiteVariables', 0],
+        'onPageContentProcessed' => ['onPageContentProcessed', $weight]
       ]);
     }
   }
@@ -148,5 +147,25 @@ class DropCapsPlugin extends Plugin
     }
 
     return false;
+  }
+
+  /**
+   * Initialize plugin and all dependencies.
+   *
+   * @return \Grav\Plugin\ExternalLinks   Returns ExternalLinks instance.
+   */
+  protected function init()
+  {
+    if (!$this->backend) {
+      // Initialize DropCaps class
+      require_once(__DIR__ . '/classes/DropCaps.php');
+      $this->dropcaps = new DropCaps();
+
+      $this->enable([
+        'onTwigSiteVariables' => ['onTwigSiteVariables', 0]
+      ]);
+    }
+
+    return $this->dropcaps;
   }
 }
