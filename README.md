@@ -1,6 +1,16 @@
-# [Grav DropCaps Plugin][project]
+# [![Grav DropCaps Plugin](assets/logo.png)][project]
+
+[![Release](https://img.shields.io/github/release/sommerregen/grav-plugin-dropcaps.svg)][project] [![Issues](https://img.shields.io/github/issues/sommerregen/grav-plugin-dropcaps.svg)][issues] [![Dual license](https://img.shields.io/badge/dual%20license-MIT%2FGPL-blue.svg)](LICENSE "License") <span style="float:right;">[![Flattr](https://api.flattr.com/button/flattr-badge-large.png)][flattr] [![PayPal](https://www.paypal.com/en_US/i/btn/btn_donate_SM.gif)][paypal]</span>
 
 > This plugin places a decorative dropped initial capital letter to the start of the first paragraph of a text.
+
+##### Table of Contents:
+
+* [About](#about)
+* [Installation and Updates](#installation-and-updates)
+* [Usage](#usage)
+* [Contributing](#contributing)
+* [Licencse](#license)
 
 ## About
 
@@ -14,9 +24,9 @@ Further it allows you to replace the first letter of user-specified paragraphs w
 
 ## Installation and Updates
 
-Installing or updating the `DropCaps` plugin can be done in one of two ways. Using the GPM (Grav Package Manager) installation method (i.e. `bin/gpm install dropcaps`) or manual install or update method by downloading [this plugin](https://github.com/sommerregen/grav-plugin-dropcaps) and extracting all plugin files to
+Installing or updating the `DropCaps` plugin can be done in one of two ways. Using the GPM (Grav Package Manager) installation update method (i.e. `bin/gpm install dropcaps`) or manual install by downloading [this plugin](https://github.com/sommerregen/grav-plugin-dropcaps) and extracting all plugin files to
 
-	/your/site/grav/user/plugins/dropcaps
+    user/plugins/dropcaps
 
 For more informations, please check the [Installation and update guide](docs/INSTALL.md).
 
@@ -26,7 +36,7 @@ The `DropCaps` plugin comes with some sensible default configuration, that are p
 
 ### Config Defaults
 
-```
+```yaml
 # Global plugin configurations
 
 enabled: true                 # Set to false to disable this plugin completely
@@ -46,7 +56,7 @@ If you need to change any value, then the best process is to copy the [dropcaps.
 
 If you want to alter the settings for one or a few pages only, you can do so by adding page specific configurations into your page headers, e.g.
 
-```
+```yaml
 dropcaps:
   titling:
     enabled: true
@@ -61,9 +71,7 @@ Something you might want to do is to override the look and feel of the drop-caps
 
 Copy the stylesheet [assets/css/dropcaps.css](assets/css/dropcaps.css) into the `css` folder of your custom theme, and add it to the list of CSS files.
 
-```
-/your/site/grav/user/themes/custom-theme/css/dropcaps.css
-```
+    user/themes/custom-theme/css/dropcaps.css
 
 After that set the `built_in_css` option of the `DropCaps` plugin to `false`. That's it.
 
@@ -81,7 +89,7 @@ After that please note:
 
 ### Support and donations
 
-If you like my project, feel free to support me via [![Flattr](https://api.flattr.com/button/flattr-badge-large.png)][flattr] or by sending me some bitcoins to **1HQdy5aBzNKNvqspiLvcmzigCq7doGfLM4**.
+If you like my project, feel free to support me via [![Flattr](https://api.flattr.com/button/flattr-badge-large.png)][flattr] or by sending me some bitcoins to [**1HQdy5aBzNKNvqspiLvcmzigCq7doGfLM4**][bitcoin].
 
 Thanks!
 
@@ -89,12 +97,19 @@ Thanks!
 
 Copyright (c) 2015 [Benjamin Regler][github]. See also the list of [contributors] who participated in this project.
 
-[Licensed](LICENSE) for use under the terms of the [MIT license][mit-license].
+[Dual-licensed](LICENSE) for use under the terms of the [MIT][mit-license] or [GPLv3][gpl-license] licenses.
+
+![GNU license - Some rights reserved][gnu]
+
 
 [github]: https://github.com/sommerregen/ "GitHub account from Benjamin Regler"
+[gpl-license]: http://opensource.org/licenses/GPL-3.0 "GPLv3 license"
 [mit-license]: http://www.opensource.org/licenses/mit-license.php "MIT license"
 
 [flattr]: https://flattr.com/submit/auto?user_id=Sommerregen&url=https://github.com/sommerregen/grav-plugin-dropcaps "Flatter my GitHub project"
+[paypal]: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=SYFNP82USG3RN "Donate for my GitHub project using PayPal"
+[bitcoin]: bitcoin:1HQdy5aBzNKNvqspiLvcmzigCq7doGfLM4?label=GitHub%20project "Donate for my GitHub project using BitCoin"
+[gnu]: https://upload.wikimedia.org/wikipedia/commons/thumb/3/33/License_icon-gpl-88x31.svg/88px-License_icon-gpl-88x31.svg.png "GNU license - Some rights reserved"
 
 [project]: https://github.com/sommerregen/grav-plugin-dropcaps
 [issues]: https://github.com/sommerregen/grav-plugin-dropcaps/issues "GitHub Issues for Grav DropCaps Plugin"
