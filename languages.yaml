@@ -1,0 +1,37 @@
+# German
+de:
+  PLUGINS:
+    DROPCAPS:
+      GLOBAL_CONFIG: "Globale Einstellungen"
+      SPECIFIC_CONFIG: "Globale und seitenspezifische Einstellungen"
+      PLUGIN_STATUS: "Plugin Status"
+      BUILTIN_CSS: "Verwende mitgeliefertes CSS"
+
+      WEIGHT: "Ausführungsreihenfolge"
+      WEIGHT_HELP: "Setze negative Werte um das Plugin direkt nach *SmartyPants* ausführen zu lassen."
+
+      PROCESS: "<code>DropCaps</code> Filter auf der Seite aktivieren"
+      TITLING: "Text in Titelzeile setzen"
+      FIRST_LINE: "Erste Zeile hervorheben"
+
+      BREAKPOINTS: "Terminierungszeichen für Titelzeile"
+      BREAKPOINTS_HELP: "Gibt an welche Zeichen die Titelzeile beenden"
+
+# English
+en:
+  PLUGINS:
+    DROPCAPS:
+      GLOBAL_CONFIG: "Global plugin configurations"
+      SPECIFIC_CONFIG: "Global and page specific configurations"
+      PLUGIN_STATUS: "Plugin status"
+      BUILTIN_CSS: "Use built in CSS"
+
+      WEIGHT: "Order of execution"
+      WEIGHT_HELP: "To process contents right after *SmartyPants* use negative values."
+
+      PROCESS: "Activate <code>DropCaps</code> filter per page"
+      TITLING: "Enable titling of text"
+      FIRST_LINE: "Highlight first line of text"
+
+      BREAKPOINTS: "Characters to mark end of titling"
+      BREAKPOINTS_HELP: "Specify which characters will end titling"
