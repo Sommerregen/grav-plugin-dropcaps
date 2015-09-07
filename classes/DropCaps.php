@@ -23,7 +23,7 @@ class DropCaps
   /**
    * @var DropCaps
    */
-	use GravTrait;
+  use GravTrait;
 
   /** -------------
    * Public methods
@@ -38,7 +38,7 @@ class DropCaps
    *
    * @return string          The processed content
    */
-	public function process($content, $options)
+  public function process($content, $options)
   {
     // Initialize variables for titling
     $titling = $options->get('titling.enabled');
