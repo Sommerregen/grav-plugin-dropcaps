@@ -156,7 +156,7 @@ class DropCapsPlugin extends Plugin
    */
   protected function init()
   {
-    if (!$this->backend) {
+    if (!$this->dropcaps) {
       // Initialize DropCaps class
       require_once(__DIR__ . '/classes/DropCaps.php');
       $this->dropcaps = new DropCaps();
