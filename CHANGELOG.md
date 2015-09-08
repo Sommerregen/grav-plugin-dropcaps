@@ -1,3 +1,9 @@
+# v1.3.2
+## 09/08/2015
+
+3. [](#bugfix)
+  * Fixed broken `CHANGELOG.md`
+
 # v1.3.1
 ## 09/07/2015
 
