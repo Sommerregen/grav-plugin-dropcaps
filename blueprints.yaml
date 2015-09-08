@@ -60,7 +60,7 @@ form:
 
       fields:
         process:
-          type: hidden
+          type: toggle
           label: PLUGINS.DROPCAPS.PROCESS
           highlight: 1
           default: 1
