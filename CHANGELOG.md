@@ -1,4 +1,4 @@
-# v1.3.0
+# v1.3.1
 ## 09/07/2015
 
 2. [](#improved)
@@ -39,7 +39,7 @@
   * Added support for HHVM **(requires Grav 0.9.17+)**
   * Added modular pages support
   * Improved readability of code
-  * Updated plugin to use new `mergeConfig` method of Grav core **(requires Grav >= 0.9.16)**
+  * Updated plugin to use new `mergeConfig` method of Grav core **(requires Grav 0.9.16+)**
 
 # v1.0.1
 ## 01/27/2015
