@@ -1,6 +1,6 @@
 <?php
 /**
- * DropCaps v1.3.2
+ * DropCaps v1.3.3
  *
  * This plugin places a decorative dropped initial capital letter to
  * the start of the first paragraph of a text.
@@ -10,7 +10,7 @@
  *
  *
  * @package     DropCaps
- * @version     1.3.2
+ * @version     1.3.3
  * @link        <https://github.com/sommerregen/grav-plugin-dropcaps>
  * @author      Benjamin Regler <sommerregen@benjamin-regler.de>
  * @copyright   2015, Benjamin Regler
@@ -72,14 +72,13 @@ class DropCapsPlugin extends Plugin
     }
 
     if ($this->config->get('plugins.dropcaps.enabled')) {
-      $this->init();
-
       $weight = $this->config->get('plugins.dropcaps.weight');
       // Process contents order according to weight option
       // (default: -5): to process page content right after SmartyPants
 
       $this->enable([
-        'onPageContentProcessed' => ['onPageContentProcessed', $weight]
+        'onPageContentProcessed' => ['onPageContentProcessed', $weight],
+        'onTwigSiteVariables' => ['onTwigSiteVariables', 0]
       ]);
     }
   }
@@ -108,7 +107,7 @@ class DropCapsPlugin extends Plugin
 
       // Insert DropCap and save modified page content
       $page->setRawContent(
-        $this->dropcaps->process($content, $config)
+        $this->init()->process($content, $config)
       );
     }
   }
@@ -160,10 +159,6 @@ class DropCapsPlugin extends Plugin
       // Initialize DropCaps class
       require_once(__DIR__ . '/classes/DropCaps.php');
       $this->dropcaps = new DropCaps();
-
-      $this->enable([
-        'onTwigSiteVariables' => ['onTwigSiteVariables', 0]
-      ]);
     }
 
     return $this->dropcaps;
