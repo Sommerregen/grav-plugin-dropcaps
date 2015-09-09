@@ -1,3 +1,9 @@
+# v1.3.3
+## 09/08/2015
+
+2. [](#improved)
+  * Changed initialization procedure
+
 # v1.3.2
 ## 09/08/2015
 
@@ -10,7 +16,7 @@
 2. [](#improved)
   * Added blueprints for Grav Admin plugin
 3. [](#bugfix)
-  * Fixed undefined property: `Grav\Plugin\DropCapsPlugin::$backend` [#1](https://github.com/Sommerregen/grav-plugin-dropcaps/issues/1)
+  * Fixed [#1](https://github.com/Sommerregen/grav-plugin-dropcaps/issues/1) (Undefined property: `Grav\Plugin\DropCapsPlugin::$backend`)
 
 # v1.3.0
 ## 08/08/2015
