@@ -93,7 +93,7 @@ class DropCaps
     $re = '~(<p[^>]*>)\s*(' . $re . ')~is';
 
     // Do content replacement
-    $content = preg_replace_callback($re, function($match) use ($paragraph, $options, $debugger) {
+    $content = preg_replace_callback($re, function($match) use ($paragraph, $options) {
       $content = $this->insertDropCap($match[2]);
       list($tag, $content) = $this->insertTitling($paragraph, $content, $options->get('titling'));
       return $tag . $content;
@@ -130,7 +130,7 @@ class DropCaps
 
     // Extract first letter and append it to the <span> element
     $firstletter = mb_strtoupper($result[2]);
-    $dropcaps .= '<span class="dropcaps dropcaps-' . mb_strtolower($firstletter) . '"';
+    $dropcaps = '<span class="dropcaps dropcaps-' . mb_strtolower($firstletter) . '"';
 
     // Attach first non-alphabetic character to <span> attribute
     if ($result[1]) {
