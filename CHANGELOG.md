@@ -1,3 +1,9 @@
+# v1.3.4
+## 11/23/2015
+
+3. [](#bugfix)
+  * Fixed [#2](https://github.com/Sommerregen/grav-plugin-dropcaps/issues/2) (PHP errors) [#3](https://github.com/Sommerregen/grav-plugin-dropcaps/pull/3)
+
 # v1.3.3
 ## 09/08/2015
 
